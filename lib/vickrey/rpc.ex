@@ -82,15 +82,15 @@ defmodule Vickrey.RPC do
     |> handle_response()
   end
 
-  def handle_response({:ok, %{error: nil, result: result}}) do
+  def handle_response({:ok, %{"error" => nil, "result" => result}}) do
     result
   end
 
-  def handle_response({:ok, %{error: err, result: _result}}) do
-    {:error, err}
+  def handle_response({:ok, %{"error" => error, "result" => _result}}) do
+    {:error, error}
   end
 
-  def handle_response({:error, %{error: error}}) do
+  def handle_response({:error, %{"error" => error}}) do
     {:error, error}
   end
 
