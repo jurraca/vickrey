@@ -27,12 +27,12 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 # Handshake auth 
-config :vickrey, 
-  ip: "127.0.0.1"
-  port: System.get_env("HANDSHAKE_NODE_PORT")
-  node_api_key: System.get_env("HANDSHAKE_NODE_AUTH")
+config :vickrey,
+  ip: "127.0.0.1",
+  port: System.get_env("HANDSHAKE_NODE_PORT"),
+  node_api_key: System.get_env("HANDSHAKE_NODE_AUTH"),
   wallet_api_key: ""
-  
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
