@@ -10,10 +10,11 @@ defmodule Vickrey.Names do
 
     body
     |> API.base_post_request()
+    |> Vickrey.RPC.handle_response()
     |> filter_name_resp()
   end
 
-  defp filter_name_resp({:ok, %{"result" => %{"info" => info}}}) do
+  defp filter_name_resp(%{"info" => info}) do
     {:ok,
      Map.take(info, [
        "name",
@@ -27,7 +28,7 @@ defmodule Vickrey.Names do
      ])}
   end
 
-  defp filter_name_resp({:error, error}), do: {:error, error}
+  defp filter_name_resp({:ok, %{error: error}}), do: {:error, error}
 
   def get_name_by_hash(hash) when is_binary(hash) do
     body = %{method: "getnamebyhash", params: [hash]} |> Jason.encode!()
