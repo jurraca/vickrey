@@ -1,4 +1,4 @@
-defmodule Vickrey.Api.Utils do
+defmodule Vickrey.API.Utils do
   @moduledoc """
       Fetch credentials and format API requests.
   """
