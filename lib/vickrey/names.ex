@@ -27,6 +27,8 @@ defmodule Vickrey.Names do
      ])}
   end
 
+  defp filter_name_resp({:error, error}), do: {:error, error}
+
   def get_name_by_hash(hash) when is_binary(hash) do
     body = %{method: "getnamebyhash", params: [hash]} |> Jason.encode!()
 
