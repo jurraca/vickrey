@@ -12,12 +12,11 @@
     <button type="submit" phx-disable-with="Searching...">Search Name</button>
   </form>
 
-  <p>
-    <datalist id="results">
-      <%= for key <- Map.keys(@results) do %>
-        <p> test </p>
-        <ul> Map.get(@results, key) </ul>
-      <% end %>
-    </datalist>
-  </p>
+  <table id="results">
+    <%= for key <- Map.keys(@results) do %>
+      <tr>
+        <td> <%= key <> ": " <> Map.get(@results.key) %> </td>
+      </tr>
+    <% end %>
+  </table>
 </section>

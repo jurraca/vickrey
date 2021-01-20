@@ -20,7 +20,7 @@ defmodule VickreyWeb.PageLive do
   @impl true
   def handle_event("search", %{"q" => query}, socket) do
     case search(query) do
-      {:ok, result} -> {:noreply, assign(socket, result: result)}
+      {:ok, results} -> {:noreply, assign(socket, results: results)}
 
       _ ->
         {:noreply,
@@ -31,6 +31,14 @@ defmodule VickreyWeb.PageLive do
   end
 
   defp search(query) do
-    Vickrey.Names.get_name_info(query)
+    query
+    |> Vickrey.Names.get_name_info()
+    |> format_search_results()
   end
+
+  defp format_search_results({:ok, results}) do
+    {stats, new_results} = Map.pop!(results, "stats")
+    {:ok, Map.merge(stats, new_results)}
+  end
+
 end
