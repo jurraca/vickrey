@@ -9,12 +9,15 @@
 
   <form phx-submit="search">
     <input type="text" name="q" value="<%= @query %>" placeholder="search" list="results" autocomplete="off"/>
+    <button type="submit" phx-disable-with="Searching...">Search Name</button>
+  </form>
+
+  <p>
     <datalist id="results">
       <%= for key <- Map.keys(@results) do %>
         <p> test </p>
         <ul> Map.get(@results, key) </ul>
       <% end %>
     </datalist>
-    <button type="submit" phx-disable-with="Searching...">Search Name</button>
-  </form>
+  </p>
 </section>
