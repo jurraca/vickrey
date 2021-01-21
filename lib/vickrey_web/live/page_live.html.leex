@@ -15,7 +15,7 @@
   <table id="results">
     <%= for key <- Map.keys(@results) do %>
       <tr>
-        <td> <%= key <> ": " <> Map.get(@results, key) %> </td>
+        <td> <%= Map.get(@results, key) %> </td>
       </tr>
     <% end %>
   </table>

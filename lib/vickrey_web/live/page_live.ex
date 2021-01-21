@@ -4,7 +4,7 @@ defmodule VickreyWeb.PageLive do
   @impl true
   def mount(_params, _session, socket) do
     # on mount, query blockchain status
-    chain_data = case {:ok, %{blocks: 10000, chain: "main", bestblockhash: "0001", difficulty: 999}} do #Vickrey.RPC.get_blockchain_info() do
+    chain_data = case Vickrey.RPC.get_blockchain_info() do
       {:ok, chain_data} -> chain_data
       msg -> msg
     end
