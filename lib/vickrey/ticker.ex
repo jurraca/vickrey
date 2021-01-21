@@ -21,7 +21,9 @@ defmodule Vickrey.Ticker do
     def handle_block(_), do: {:error, "no txs"}
 
     def handle_tx(%{"vout" => outputs} ) do
-        Enum.map(outputs, fn vout -> handle_outputs(vout) end)
+      outputs
+      |> Enum.map(fn vout -> handle_outputs(vout) end)
+      |> Enum.filter(fn item -> item != nil end)
     end
 
     def handle_tx(%{}), do: %{}
@@ -31,8 +33,7 @@ defmodule Vickrey.Ticker do
         true -> get_name_from_list(cov["items"], [])
         false -> nil
       end
-
-      %{name: name, action: cov["action"], value: value}
+      format_output(name, cov["action"], value)
     end
 
     def handle_outputs(%{"covenant" => _}) do
@@ -41,12 +42,21 @@ defmodule Vickrey.Ticker do
 
     def get_name_from_list([head | tail], state) do
       if String.length(head) > 20 do
-        name = Names.get_name_by_hash(head)
-        get_name_from_list(tail, state ++ [name])
+        case Names.get_name_by_hash(head) do
+          {:ok, %{"result" => nil}} -> get_name_from_list(tail, state)
+          {:ok, %{"result" => result}} -> get_name_from_list(tail, state ++ [result])
+          {:error, _} -> get_name_from_list(tail, state)
+        end
       else
         get_name_from_list(tail, state)
       end
     end
 
     def get_name_from_list([], state), do: state
+
+    defp format_output(nil, _action, _value), do: nil
+
+    defp format_output(name, action, value) do
+      %{name: name, action: action, value: value}
+    end
 end
