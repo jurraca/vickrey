@@ -41,7 +41,7 @@ defmodule Vickrey.Ticker do
 
     def get_name_from_list([head | tail], state) do
       if String.length(head) > 20 do
-        name = Names.get_name_info(head)
+        name = Names.get_name_by_hash(head)
         get_name_from_list(tail, state ++ [name])
       else
         get_name_from_list(tail, state)
