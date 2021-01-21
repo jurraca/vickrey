@@ -17,12 +17,29 @@
   </form>
 
   <table id="results">
-
-    <%= for {k, v} <- @results do %>
-      <tr class="py-0">
-        <td class="py-0 pl-4" > <%= "#{k}" %>  </td>
-        <td class="py-0"> <%= "#{v}" %> </td>
+      <tr class="p-0">
+        <td class="p-0 font-bold text-x1" > <%= "name" %>  </td>
+        <td class="p-0"> <%= @results["name"] %> </td>
       </tr>
-    <% end %>
+      <tr class="p-0">
+        <td class="p-0 font-bold text-x1" > <%= "state" %>  </td>
+        <td class="p-0"> <%= @results["state"] %> </td>
+      </tr>
+      <tr class="p-0">
+        <td class="p-0 font-bold text-x1" > <%= "opened at height" %>  </td>
+        <td class="p-0"> <%= @results["height"] %> </td>
+      </tr>
+      <tr class="p-0">
+        <td class="p-0 font-bold text-x1" > <%= "blocks until close" %>  </td>
+        <td class="p-0"> <%= @results["blocksUntilClose"] %> </td>
+      </tr>
+      <tr class="p-0">
+        <td class="p-0 font-bold text-x1" > <%= "~hours until close" %>  </td>
+        <td class="p-0"> <%= @results["hoursUntilClose"] %> </td>
+      </tr>
+      <tr class="p-0">
+        <td class="p-0 font-bold text-x1" > <%= "value" %>  </td>
+        <td class="p-0"> <%= @results["value"] %> </td>
+      </tr>
   </table>
 </section>
