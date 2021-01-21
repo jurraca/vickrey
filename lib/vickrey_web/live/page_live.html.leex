@@ -13,9 +13,9 @@
   </form>
 
   <table id="results">
-    <%= for key <- Map.keys(@results) do %>
+    <%= for {k, v} <- @results do %>
       <tr>
-        <td> <%= Map.get(@results, key) %> </td>
+        <td> <%= "#{k}: #{v}" %> </td>
       </tr>
     <% end %>
   </table>

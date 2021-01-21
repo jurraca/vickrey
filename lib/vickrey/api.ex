@@ -42,4 +42,12 @@ defmodule Vickrey.API do
   def handle_response({:ok, %HTTPoison.Response{body: body, status_code: status}}) do
     %{status_code: status, body: Jason.decode(body)}
   end
+
+  def handle_response({:ok, %HTTPoison.Error{reason: reason}}) do
+    {:error, reason}
+  end
+
+  def handle_response({:error, %HTTPoison.Error{reason: reason}}) do
+    {:error, reason}
+  end
 end
