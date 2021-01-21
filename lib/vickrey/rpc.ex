@@ -34,7 +34,7 @@ defmodule Vickrey.RPC do
   end
 
   def get_block_by_height(blockheight, verbose \\ 1, details \\ 1) do
-    body = Jason.encode!(%{method: "getblock", params: [blockheight, verbose, details]})
+    body = Jason.encode!(%{method: "getblockbyheight", params: [blockheight, verbose, details]})
     body
     |> API.base_post_request()
     |> handle_response()

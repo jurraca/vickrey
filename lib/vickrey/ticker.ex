@@ -18,16 +18,16 @@ defmodule Vickrey.Ticker do
     end
 
     def fetch_last_n_blocks(n) do
-      {:ok, height} = RPC.get_block_count()
+      height = RPC.get_block_count()
       fetch_blocks_since(height, n)
     end
 
     def fetch_blocks_since(height, n) do
       blocks = (height-n)..height
       blocks
-      |> Enum.map(fn block -> RPC.get_block_by_height(block) end)
-      |> Enum.map(fn resp -> Map.get(resp, "hash") end)
-      |> Enum.map(fn hash -> fetch_block(hash) end )
+      |> Enum.map(fn blockheight -> RPC.get_block_by_height(blockheight) end)
+      |> Enum.map(fn block -> Map.get(block, "hash") end)
+      |> Enum.map(fn blockhash -> fetch_block(blockhash) end )
     end
 
     def handle_block(%{"tx" => txs}) do
