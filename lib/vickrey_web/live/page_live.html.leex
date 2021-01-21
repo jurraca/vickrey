@@ -1,11 +1,15 @@
 <section class="phx-hero">
-  <h1>Chain State</h1>
-  <p>
-    <ul>Chain: <%= @chain["chain"] %></ul>
-    <ul>Block count: <%= @chain["blocks"] %></ul>
-    <ul>Best Blockhash: <%= @chain["bestblockhash"] %></ul>
-    <ul>Difficulty: <%= @chain["difficulty"] %></ul>
-  </p>
+  <div class="container object-contain pl-42 justify-start text-left">
+  <h1 class="text-4x1 font-bold text-purple-500">Chain State</h1>
+    <table>
+      <%= for {item, tag} <- [{"chain", "chain"}, {"block height", "blocks"}, {"best block hash", "bestblockhash"}, {"difficulty", "difficulty"}] do %>
+        <tr class="py-0">
+          <td class="py-0 pl-4"> <%= item %> </td>
+          <td class="py-0"> <%= @chain[tag] %> </td>
+        </tr>
+      <%= end %>
+    </table>
+  </div>
 
   <form phx-submit="search">
     <input type="text" name="q" value="<%= @query %>" placeholder="search" list="results" autocomplete="off"/>
@@ -13,9 +17,11 @@
   </form>
 
   <table id="results">
+
     <%= for {k, v} <- @results do %>
-      <tr>
-        <td> <%= "#{k}: #{v}" %> </td>
+      <tr class="py-0">
+        <td class="py-0 pl-4" > <%= "#{k}" %>  </td>
+        <td class="py-0"> <%= "#{v}" %> </td>
       </tr>
     <% end %>
   </table>
