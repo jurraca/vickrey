@@ -14,12 +14,19 @@ defmodule Vickrey.Ticker do
     end
 
     def handle_block(%{"tx" => txs}) do
-      {:ok, Enum.map(txs, fn tx -> handle_tx(tx) end)}
+      txs
+      |> Enum.map(fn tx -> handle_tx(tx) end)
     end
 
     def handle_block(_), do: {:error, "no txs"}
 
-    def handle_tx(%{"vout" => %{"covenant" => cov, "value" => value}} ) do
+    def handle_tx(%{"vout" => outputs} ) do
+        Enum.map(outputs, fn vout -> handle_outputs(vout) end)
+    end
+
+    def handle_tx(%{}), do: %{}
+
+    def handle_outputs(%{"covenant" => cov, "value" => value}) do
       name = case cov["action"] in @actions do
         true -> get_name_from_list(cov["items"], [])
         false -> nil
@@ -28,7 +35,7 @@ defmodule Vickrey.Ticker do
       %{name: name, action: cov["action"], value: value}
     end
 
-    def handle_tx(%{"vout" => %{"covenant" => _}}) do
+    def handle_outputs(%{"covenant" => _}) do
       %{}
     end
 
