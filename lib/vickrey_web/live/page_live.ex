@@ -12,7 +12,8 @@ defmodule VickreyWeb.PageLive do
   @impl true
   def handle_event("search", %{"q" => query}, socket) do
     case search(query) do
-      {:ok, results} -> {:noreply, assign(socket, results: results)}
+      {:ok, results} ->
+        {:noreply, assign(socket, results: results)}
 
       _ ->
         {:noreply,
