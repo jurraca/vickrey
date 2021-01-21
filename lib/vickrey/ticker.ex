@@ -19,7 +19,7 @@ defmodule Vickrey.Ticker do
 
     def handle_block(_), do: {:error, "no txs"}
 
-    def handle_tx(%{"covenant" => cov, "value" => value} ) do
+    def handle_tx(%{"vout" => %{"covenant" => cov, "value" => value}} ) do
       name = case cov["action"] in @actions do
         true -> get_name_from_list(cov["items"], [])
         false -> nil
@@ -28,7 +28,7 @@ defmodule Vickrey.Ticker do
       %{name: name, action: cov["action"], value: value}
     end
 
-    def handle_tx(%{"covenant" => _}) do
+    def handle_tx(%{"vout" => %{"covenant" => _}}) do
       %{}
     end
 
