@@ -1,10 +1,10 @@
 <section class="phx-hero">
   <h1>Chain State</h1>
   <p>
-    <ul>Chain: <%= @chain.chain %></ul>
-    <ul>Block count: <%= @chain.blocks %></ul>
-    <ul>Best Blockhash: <%= @chain.bestblockhash %></ul>
-    <ul>Difficulty: <%= @chain.difficulty %></ul>
+    <ul>Chain: <%= @chain["chain"] %></ul>
+    <ul>Block count: <%= @chain["blocks"] %></ul>
+    <ul>Best Blockhash: <%= @chain["bestblockhash"] %></ul>
+    <ul>Difficulty: <%= @chain["difficulty"] %></ul>
   </p>
 
   <form phx-submit="search">
