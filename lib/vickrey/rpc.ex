@@ -14,28 +14,28 @@ defmodule Vickrey.RPC do
 
   def get_best_blockhash() do
     body = Jason.encode!(%{method: "getbestblockhash"})
-        body
+    body
     |> API.base_post_request()
     |> handle_response()
   end
 
   def get_block_count() do
     body = Jason.encode!(%{method: "getblockcount"})
-        body
+    body
     |> API.base_post_request()
     |> handle_response()
   end
 
   def get_block(blockhash, verbose \\ 1, details \\ 1) do
     body = Jason.encode!(%{method: "getblock", params: [blockhash, verbose, details]})
-        body
+    body
     |> API.base_post_request()
     |> handle_response()
   end
 
   def get_block_by_height(blockheight, verbose \\ 1, details \\ 1) do
     body = Jason.encode!(%{method: "getblock", params: [blockheight, verbose, details]})
-        body
+    body
     |> API.base_post_request()
     |> handle_response()
   end

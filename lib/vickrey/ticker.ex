@@ -7,10 +7,27 @@ defmodule Vickrey.Ticker do
 
     @actions ["OPEN", "BID"]
 
-    def fetch_last_block() do
-      RPC.get_best_blockhash()
+    def fetch_block(blockhash) do
+      blockhash
       |> RPC.get_block()
       |> handle_block()
+    end
+    def fetch_last_block() do
+      RPC.get_best_blockhash()
+      |> fetch_block()
+    end
+
+    def fetch_last_n_blocks(n) do
+      {:ok, height} = RPC.get_block_count()
+      fetch_blocks_since(height, n)
+    end
+
+    def fetch_blocks_since(height, n) do
+      blocks = (height-n)..height
+      blocks
+      |> Enum.map(fn block -> RPC.get_block_by_height(block) end)
+      |> Enum.map(fn resp -> Map.get(resp, "hash") end)
+      |> Enum.map(fn hash -> fetch_block(hash) end )
     end
 
     def handle_block(%{"tx" => txs}) do
@@ -24,6 +41,7 @@ defmodule Vickrey.Ticker do
       outputs
       |> Enum.map(fn vout -> handle_outputs(vout) end)
       |> Enum.filter(fn item -> item != nil end)
+      |> List.flatten()
     end
 
     def handle_tx(%{}), do: %{}
