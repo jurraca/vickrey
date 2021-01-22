@@ -1,4 +1,4 @@
-defmodule Vickrey.BidsLive do
+defmodule VickreyWeb.BidsLive do
   use VickreyWeb, :live_view
 
     def mount(_params, _session, socket) do
