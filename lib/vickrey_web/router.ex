@@ -18,6 +18,7 @@ defmodule VickreyWeb.Router do
     pipe_through :browser
 
     live "/", PageLive, :index
+    live "/live", BidsLive, :index
   end
 
   # Other scopes may use custom stacks.

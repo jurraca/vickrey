@@ -35,6 +35,7 @@ defmodule Vickrey.Ticker do
   def handle_block(%{"tx" => txs}) do
     txs
     |> Enum.map(fn tx -> handle_tx(tx) end)
+    |> List.flatten()
   end
 
   def handle_block(_), do: {:error, "no txs"}
