@@ -1,12 +1,21 @@
 <section>
     <div>
-        <h2> New bids </h2>
-        <%= for row <- @bids do %>
-          <ul> <%= row.name %> : bid value <%= row.value %> </ul>
-        <% end %>
-        <h2> New Opens </h2>
-            <%= for row <- @opens do %>
-            <ul> <%= row.name %> </ul>
-        <% end %>
+        <div>
+            <h2 class="text-purple-500 text-5xl my-8"> New Bids </h2>
+            <div class="space-x-4">
+                <%= for row <- @bids do %>
+                  <div class="inline-block border-2 rounded-xl mx-4 p-8"> <span class="text-3xl"><%= row.name %> </span> <br> bid: <%= row.value %> HNS </div>
+                <% end %>
+            </div>
+        </div>
+
+        <div>
+            <h2 class="text-purple-500 text-5xl my-8"> New Opens </h2>
+                <div class="grid box-content object-fill grid-flow-col grid-rows-5 auto-cols-max gap-4 mx-36 my-4 p-12 ">
+                    <%= for row <- @opens do %>
+                        <div class="container box-content text-5xl w-36 mx-auto p-6 border-2 rounded-xl"> <a href="https://namebase.io/domains/<%= row.name  %>"> <%= row.name  %> </a> </div>
+                    <% end %>
+                </div>
+        </div>
     </div>
 </section>
