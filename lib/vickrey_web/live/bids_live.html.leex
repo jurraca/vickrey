@@ -16,9 +16,12 @@
 
         <div>
             <h2 class="text-purple-500 text-5xl my-8 font-bold"> New Opens </h2>
-                <div class="grid box-content object-fill grid-flow-col auto-rows-max grid-cols-9 gap-4 mx-36 my-4 p-12 ">
+                <div class="grid box-content object-fill grid-flow-col grid-rows-9 auto-cols-max gap-4 mx-36 my-4 p-12 ">
                     <%= for row <- @opens do %>
-                        <div class="container hover:bg-green-400 box-content break-words text-5xl w-36 mx-auto p-6 border-2 rounded-xl"> <a href="https://namebase.io/domains/<%= row.name  %>"> <%= row.name  %> </a> </div>
+                        <div class="container hover:bg-green-400 box-content break-words w-36 mx-auto p-6 border-2 rounded-xl">
+                            <span class="text-3xl"> <a href="https://namebase.io/domains/<%= row.name  %>"> <%= row.name  %> </a>
+                            </span>
+                        </div>
                     <% end %>
                 </div>
         </div>
