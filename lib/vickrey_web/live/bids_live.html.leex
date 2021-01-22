@@ -4,7 +4,7 @@
             <h2 class="text-purple-500 text-5xl my-8 font-bold"> New Bids </h2>
             <div class="space-x-4">
                 <%= for row <- @bids do %>
-                    <div class="inline-block border-2 rounded-xl m-4 p-8">
+                    <div class="inline-block hover:bg-blue-400 border-2 rounded-xl m-4 p-8">
                        <span class="text-3xl font-bold">
                           <a href="https://namebase.io/domains/<%= row.name  %>"> <%= row.name  %> </a>
                        </span>
@@ -18,7 +18,7 @@
             <h2 class="text-purple-500 text-5xl my-8 font-bold"> New Opens </h2>
                 <div class="grid box-content object-fill grid-flow-col grid-rows-5 auto-cols-max gap-4 mx-36 my-4 p-12 ">
                     <%= for row <- @opens do %>
-                        <div class="container box-content text-5xl w-36 mx-auto p-6 border-2 rounded-xl"> <a href="https://namebase.io/domains/<%= row.name  %>"> <%= row.name  %> </a> </div>
+                        <div class="container hover:bg-green-400 box-content text-5xl w-36 mx-auto p-6 border-2 rounded-xl"> <a href="https://namebase.io/domains/<%= row.name  %>"> <%= row.name  %> </a> </div>
                     <% end %>
                 </div>
         </div>
