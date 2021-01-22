@@ -11,7 +11,7 @@ defmodule VickreyWeb.BidsLive do
       case action do
         "BID" -> filter_by_action(tail, {bids ++ [ head ], opens})
         "OPEN" -> filter_by_action(tail, { bids, opens ++ [ head ]})
-        other -> IO.inspect(other, label: "Unknown action")
+        _ -> filter_by_action(tail, {bids, opens})
       end
     end
 
