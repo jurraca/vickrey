@@ -1,20 +1,20 @@
 # Vickrey
 
-To start your Phoenix server:
+Vickrey is an interface for your Handshake node written in Elixir. 
 
+It can do a few things: 
+- Interface with your node by implementing the RPC and API methods available.
+- Let you search for names via a UI.
+- See chain activity--bids, opens, reveals--as they come in to your node in a friendly LiveView-powered interface. [*WIP*]
+- Set a watchlist to monitor names. [*TODO*]
+- Set alerts for certain names (upon release, a day before the last bid, etc). [*TODO*] 
+
+You'll need Elixir (and therefore Erlang/OTP) installed. 
+  * set up the environment variables for your node in `config/config.exs` 
   * Install dependencies with `mix deps.get`
   * Create and migrate your database with `mix ecto.setup`
-  * Install Node.js dependencies with `npm install` inside the `assets` directory
-  * Start Phoenix endpoint with `mix phx.server`
+  * `cd assets` and `npm install`
+  * Start Phoenix endpoint with `mix phx.server` or `iex -S mix phx.server` if you want the cli as well. 
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+The app runs on [`localhost:4000`](http://localhost:4000) which you can access from your browser.
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
-
-## Learn more
-
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
