@@ -55,4 +55,32 @@ defmodule Vickrey.Mocks do
 
   end
 
+  def last_block_parsed() do
+    {[
+      %{action: "BID", name: ["4gab"], value: 6.5},
+      %{action: "BID", name: ["pismo"], value: 7.2},
+      %{action: "BID", name: ["som1"], value: 5.4}
+    ], [
+      %{action: "OPEN", name: ["4gab"], value: 6.5},
+      %{action: "OPEN", name: ["pismo"], value: 7.2},
+      %{action: "OPEN", name: ["sm1"], value: 5.4},
+      %{action: "OPEN", name: ["4ab"], value: 6.5},
+      %{action: "OPEN", name: ["ismo"], value: 7.2},
+      %{action: "OPEN", name: ["om1"], value: 5.4},
+      %{action: "OPEN", name: ["gab"], value: 6.5},
+      %{action: "OPEN", name: ["smo"], value: 7.2},
+      %{action: "OPEN", name: ["m1"], value: 5.4},
+      %{action: "OPEN", name: ["4gab"], value: 6.5},
+      %{action: "OPEN", name: ["pismo"], value: 7.2},
+      %{action: "OPEN", name: ["sm1"], value: 5.4},
+      %{action: "OPEN", name: ["4ab"], value: 6.5},
+      %{action: "OPEN", name: ["ismo"], value: 7.2},
+      %{action: "OPEN", name: ["om1"], value: 5.4},
+      %{action: "OPEN", name: ["gab"], value: 6.5},
+      %{action: "OPEN", name: ["smo"], value: 7.2},
+      %{action: "OPEN", name: ["m1"], value: 5.4}
+
+    ]}
+  end
+
 end
