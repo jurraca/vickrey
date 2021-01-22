@@ -1,6 +1,12 @@
 <section>
     <div>
-        <p> Bids: <%= @bids %> </p>
-        <p> Opens: <%= @opens %> </p>
+        <h2> New bids </h2>
+        <%= for row <- @bids do %>
+          <ul> <%= row["name"] %> : bid value <%= row["value"] %> </ul>
+        <% end %>
+        <h2> New Opens </h2>
+            <%= for row <- @opens do %>
+            <ul> <%= row["name"] %> </ul>
+        <% end %>
     </div>
 </section>
