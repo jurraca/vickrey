@@ -1,0 +1,29 @@
+<section>
+    <div>
+        <div>
+            <h2 class="text-purple-500 text-5xl my-8 font-bold"> New Bids </h2>
+            <div class="space-x-4">
+                <%= for row <- @bids do %>
+                    <div class="inline-block hover:bg-blue-400 break-words border-2 rounded-xl m-4 p-8">
+                       <span class="text-3xl font-bold">
+                          <a href="https://namebase.io/domains/<%= row.name  %>"> <%= row.name  %> </a>
+                       </span>
+                       <br> bid: <%= row.value %> HNS
+                    </div>
+                <% end %>
+            </div>
+        </div>
+
+        <div>
+            <h2 class="text-purple-500 text-5xl my-8 font-bold"> New Opens </h2>
+                <div class="space-x-4 gap-4 mx-36 my-4 p-12 ">
+                    <%= for row <- @opens do %>
+                        <div class="inline-block hover:bg-green-400 box-content break-words w-36 mx-auto p-6 border-2 rounded-xl">
+                            <span class="text-3xl"> <a href="https://namebase.io/domains/<%= row.name  %>"> <%= row.name  %> </a>
+                            </span>
+                        </div>
+                    <% end %>
+                </div>
+        </div>
+    </div>
+</section>

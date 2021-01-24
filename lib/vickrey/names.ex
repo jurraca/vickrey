@@ -30,6 +30,8 @@ defmodule Vickrey.Names do
 
   defp filter_name_resp({:ok, %{error: error}}), do: {:error, error}
 
+  defp filter_name_resp({:error, %{"message" => error}}), do: {:error, error}
+
   def get_name_by_hash(hash) when is_binary(hash) do
     body = %{method: "getnamebyhash", params: [hash]} |> Jason.encode!()
 
