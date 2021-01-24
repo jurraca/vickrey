@@ -41,26 +41,31 @@ defmodule Vickrey.Ticker do
   def fetch_last_bids(n \\ 10) do
     blocks = fetch_last_n_blocks(n)
 
-    blocks
-    |> Enum.map(fn block -> Enum.filter(block, fn row -> row.action in @bids end) end)
+    Enum.map(blocks, fn block -> Enum.filter(
+      block, fn row -> row.action in @bids end)
+    end)
   end
 
   def fetch_last_sold(n \\ 10) do
-    rows = fetch_last_n_blocks(n)
+    blocks = fetch_last_n_blocks(n)
 
-    Enum.filter(rows, fn row -> row.action in @sold end)
+    Enum.map(blocks, fn block -> Enum.filter(
+      block, fn row -> row.action in @sold end)
+    end)
   end
 
   def fetch_last_renewals(n \\ 10) do
-    rows = fetch_last_n_blocks(n)
-
-    Enum.filter(rows, fn row -> row.action in @renew end)
+    blocks = fetch_last_n_blocks(n)
+    Enum.map(blocks, fn block -> Enum.filter(
+      block, fn row -> row.action in @renew end)
+    end)
   end
 
   def fetch_last_revoke(n \\ 10) do
-    rows = fetch_last_n_blocks(n)
+    blocks = fetch_last_n_blocks(n)
 
-    Enum.filter(rows, fn row -> row.action in @revoke end)
+    blocks
+    |> Enum.map(fn block -> Enum.filter(block, fn row -> row.action in @revoke end) end)
   end
 
   def handle_block(%{"tx" => txs}) do
