@@ -39,9 +39,10 @@ defmodule Vickrey.Ticker do
   end
 
   def fetch_last_bids(n \\ 10) do
-    rows = fetch_last_n_blocks(n)
+    blocks = fetch_last_n_blocks(n)
 
-    Enum.filter(rows, fn row -> row.action in @bids end)
+    blocks
+    |> Enum.map(fn block -> Enum.filter(block, fn row -> row.action in @bids end) end)
   end
 
   def fetch_last_sold(n \\ 10) do
