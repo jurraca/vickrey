@@ -5,11 +5,20 @@ defmodule Vickrey.Ticker do
 
   alias Vickrey.{RPC, Names}
 
-  @actions ["OPEN", "BID"]
+  @bids ["OPEN", "BID"]
+  @sold ["CLOSED", "FINALIZE", "TRANSFER"]
+  @renew ["RENEW"]
+  @revoke ["REVOKE"]
 
-  def fetch_block(blockhash) do
+  def fetch_block(blockhash) when is_binary(blockhash) do
     blockhash
     |> RPC.get_block()
+    |> handle_block()
+  end
+
+  def fetch_block(blockheight) when is_integer(blockheight) do
+    blockheight
+    |> RPC.get_block_by_height()
     |> handle_block()
   end
 
@@ -24,12 +33,33 @@ defmodule Vickrey.Ticker do
   end
 
   def fetch_blocks_since(height, n) do
-    blocks = (height - n)..height
+    blocks = (height + 1 - n)..height
 
-    blocks
-    |> Enum.map(fn blockheight -> RPC.get_block_by_height(blockheight) end)
-    |> Enum.map(fn block -> Map.get(block, "hash") end)
-    |> Enum.map(fn blockhash -> fetch_block(blockhash) end)
+    Enum.map(blocks, fn blockheight -> fetch_block(blockheight) end)
+  end
+
+  def fetch_last_bids(n \\ 10) do
+    rows = fetch_last_n_blocks(n)
+
+    Enum.filter(rows, fn row -> row.action in @bids end)
+  end
+
+  def fetch_last_sold(n \\ 10) do
+    rows = fetch_last_n_blocks(n)
+
+    Enum.filter(rows, fn row -> row.action in @sold end)
+  end
+
+  def fetch_last_renewals(n \\ 10) do
+    rows = fetch_last_n_blocks(n)
+
+    Enum.filter(rows, fn row -> row.action in @renew end)
+  end
+
+  def fetch_last_revoke(n \\ 10) do
+    rows = fetch_last_n_blocks(n)
+
+    Enum.filter(rows, fn row -> row.action in @revoke end)
   end
 
   def handle_block(%{"tx" => txs}) do
@@ -51,7 +81,7 @@ defmodule Vickrey.Ticker do
 
   def handle_outputs(%{"covenant" => cov, "value" => value}) do
     name =
-      case cov["action"] in @actions do
+      case cov["action"] != "NONE" do
         true -> get_name_from_list(cov["items"], [])
         false -> nil
       end
