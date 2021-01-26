@@ -15,7 +15,7 @@ config :vickrey, Vickrey.Repo,
   username: "postgres",
   password: System.get_env("HANDSHAKE_DB_PW"),
   database: "postgres",
-  hostname: "db.wyesrtyhmwnbyepkpudx.supabase.co",
+  hostname: System.get_env("HANDSHAKE_DB_HOST"),
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
