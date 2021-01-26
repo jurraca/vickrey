@@ -10,6 +10,15 @@ use Mix.Config
 config :vickrey,
   ecto_repos: [Vickrey.Repo]
 
+# Configure your database
+config :vickrey, Vickrey.Repo,
+  username: "postgres",
+  password: System.get_env("HANDSHAKE_DB_PW"),
+  database: "postgres",
+  hostname: "db.wyesrtyhmwnbyepkpudx.supabase.co",
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 10
+
 # Configures the endpoint
 config :vickrey, VickreyWeb.Endpoint,
   url: [host: "localhost"],
@@ -26,7 +35,7 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-# Handshake auth 
+# Handshake auth
 config :vickrey,
   ip: "127.0.0.1",
   port: System.get_env("HANDSHAKE_NODE_PORT"),

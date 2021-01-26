@@ -8,7 +8,7 @@ defmodule Vickrey.Application do
   def start(_type, _args) do
     children = [
       # Start the Ecto repository
-      # Vickrey.Repo,
+      Vickrey.Repo,
       # Start the Telemetry supervisor
       VickreyWeb.Telemetry,
       # Start the PubSub system
