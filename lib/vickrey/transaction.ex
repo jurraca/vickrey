@@ -23,4 +23,8 @@ defmodule Vickrey.Transaction do
         |> changeset(tx)
         |> Vickrey.Repo.insert()
     end
+
+    def insert(height, row = []) do
+        Enum.map(row, fn r -> insert(height, r) end)
+    end
 end
