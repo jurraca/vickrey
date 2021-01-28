@@ -97,6 +97,7 @@ defmodule Vickrey.Ticker do
     items
     |> get_name_from_list([])
     |> format_output(action, value)
+    |> List.flatten()
   end
 
   def handle_outputs(%{"covenant" => _}) do
