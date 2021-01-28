@@ -115,8 +115,11 @@ defmodule Vickrey.Ticker do
 
   defp format_output(nil, _action, _value), do: nil
 
-  defp format_output(name, action, value) do
-    name
-    |> Enum.map(fn n -> %{name: n, action: action, value: value} end)
+  defp format_output(name, action, value) when is_integer(value) do
+    Enum.map(name, fn n -> %{name: n, action: action, value: value / 1 } end)
+  end
+
+  defp format_output(name, action, value) when is_float(value) do
+    Enum.map(name, fn n -> %{name: n, action: action, value: value } end)
   end
 end
