@@ -38,6 +38,13 @@ defmodule Vickrey.Ticker do
     Enum.map(blocks, fn blockheight -> fetch_block(blockheight) end)
   end
 
+  def crawl_chain_from_to(start, finish) do
+    start..finish
+    |> Stream.map(fn blockheight -> {blockheight, fetch_block(blockheight)} end)
+    |> Stream.map(fn {height, row} -> Vickrey.Transaction.insert(height, row) end)
+    |> Enum.count()
+  end
+
   def fetch_last_bids(n \\ 10) do
     blocks = fetch_last_n_blocks(n)
 
