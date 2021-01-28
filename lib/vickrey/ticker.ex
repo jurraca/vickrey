@@ -78,18 +78,13 @@ defmodule Vickrey.Ticker do
   def handle_block(%{"tx" => txs}) do
     txs
     |> Enum.map(fn tx -> handle_tx(tx) end)
-  end
-
-  def handle_block(_), do: {:error, "no txs"}
-
-  def handle_tx(%{"vout" => outputs}) do
-    outputs
+    |> Enum.map(fn tx -> Map.fetch!(tx, "vout") end)
     |> Enum.map(fn vout -> handle_outputs(vout) end)
     |> Enum.filter(fn item -> item != nil end)
     |> List.flatten()
   end
 
-  def handle_tx(%{}), do: %{}
+  def handle_block(_), do: {:error, "no txs"}
 
   def handle_outputs(%{"covenant" => %{"action" => "NONE"}}), do: nil
 
