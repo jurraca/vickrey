@@ -92,14 +92,12 @@ defmodule Vickrey.Ticker do
 
   def handle_tx(%{}), do: %{}
 
-  def handle_outputs(%{"covenant" => cov, "value" => value}) do
-    name =
-      case cov["action"] != "NONE" do
-        true -> get_name_from_list(cov["items"], [])
-        false -> nil
-      end
+  def handle_outputs(%{"covenant" => %{"action" => "NONE"}}), do: nil
 
-    format_output(name, cov["action"], value)
+  def handle_outputs(%{"covenant" => %{"action" => action, "items" => items}, "value" => value}) do
+    items
+    |> get_name_from_list([])
+    |> format_output(action, value)
   end
 
   def handle_outputs(%{"covenant" => _}) do
@@ -123,6 +121,7 @@ defmodule Vickrey.Ticker do
   defp format_output(nil, _action, _value), do: nil
 
   defp format_output(name, action, value) do
-    %{name: name, action: action, value: value}
+    name
+    |> Enum.map(fn n -> %{name: n, action: action, value: value} end)
   end
 end
