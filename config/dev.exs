@@ -3,9 +3,9 @@ use Mix.Config
 # Configure your database
 config :vickrey, Vickrey.Repo,
   username: "postgres",
-  password: "postgres",
-  database: "vickrey_dev",
-  hostname: "localhost",
+  password: System.get_env("HANDSHAKE_DB_PW"),
+  database: "postgres",
+  hostname: System.get_env("HANDSHAKE_DB_HOST"),
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
