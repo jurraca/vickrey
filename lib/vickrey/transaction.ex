@@ -27,6 +27,7 @@ defmodule Vickrey.Transaction do
     def insert(_height, []), do: nil
 
     def insert(height, row) when is_list(row) do
-        Enum.map(row, fn r -> insert(height, r) end)
+        entries = Enum.map(row, fn r -> Map.put_new(r, :height, height) end)
+        Vickrey.Repo.insert_all(Vickrey.Transaction, entries)
     end
 end
