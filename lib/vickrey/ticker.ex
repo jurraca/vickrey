@@ -77,8 +77,8 @@ defmodule Vickrey.Ticker do
 
   def handle_block(%{"tx" => txs}) do
     txs
-    |> Enum.map(fn tx -> handle_tx(tx) end)
     |> Enum.map(fn tx -> Map.fetch!(tx, "vout") end)
+    |> List.flatten()
     |> Enum.map(fn vout -> handle_outputs(vout) end)
     |> Enum.filter(fn item -> item != nil end)
     |> List.flatten()
