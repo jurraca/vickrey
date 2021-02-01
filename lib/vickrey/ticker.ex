@@ -46,24 +46,33 @@ defmodule Vickrey.Fetcher do
   def fetch_last_bids(n \\ 10) do
     n
     |> fetch_last_n_blocks()
-    |> Enum.map(fn block -> Enum.filter(
-      block, fn row -> row.action in @bids end)
+    |> Enum.map(fn block ->
+      Enum.filter(
+        block,
+        fn row -> row.action in @bids end
+      )
     end)
   end
 
   def fetch_last_sold(n \\ 10) do
     n
     |> fetch_last_n_blocks()
-    |> Enum.map(fn block -> Enum.filter(
-      block, fn row -> row.action in @sold end)
+    |> Enum.map(fn block ->
+      Enum.filter(
+        block,
+        fn row -> row.action in @sold end
+      )
     end)
   end
 
   def fetch_last_renewals(n \\ 10) do
     n
     |> fetch_last_n_blocks()
-    |> Enum.map(fn block -> Enum.filter(
-      block, fn row -> row.action in @renew end)
+    |> Enum.map(fn block ->
+      Enum.filter(
+        block,
+        fn row -> row.action in @renew end
+      )
     end)
   end
 
@@ -114,10 +123,10 @@ defmodule Vickrey.Fetcher do
   defp format_output(nil, _action, _value), do: nil
 
   defp format_output(name, action, value) when is_integer(value) do
-    Enum.map(name, fn n -> %{name: n, action: action, value: value / 1 } end)
+    Enum.map(name, fn n -> %{name: n, action: action, value: value / 1} end)
   end
 
   defp format_output(name, action, value) when is_float(value) do
-    Enum.map(name, fn n -> %{name: n, action: action, value: value } end)
+    Enum.map(name, fn n -> %{name: n, action: action, value: value} end)
   end
 end
