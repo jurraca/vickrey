@@ -9,6 +9,12 @@ defmodule Vickrey.Query do
         |> Repo.all()
     end
 
+    def get_name_closed(name) do
+      name
+      |> get_name()
+      |> Enum.filter(fn %Vickrey.Transaction{action: action} -> action in ["FINALIZE", "REGISTER"] end)
+    end
+
     def get_all_by_action(action) do
       Transaction
       |> where([t], t.action == ^action)
@@ -26,10 +32,5 @@ defmodule Vickrey.Query do
     def get_all_open_since(height) do
       get_all_open()
       |> where([t], t.height >= ^height)
-    end
-
-    def get_name_returns(name) do
-      get_name(name)
-      |> Enum.filter(fn %Vickrey.Transaction{action: action} -> action in ["CLOSED", "REGISTER"] end)
     end
 end
