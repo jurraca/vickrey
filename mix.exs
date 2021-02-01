@@ -5,7 +5,7 @@ defmodule Vickrey.MixProject do
     [
       app: :vickrey,
       version: "0.1.0",
-      elixir: "~> 1.7",
+      elixir: "~> 1.11",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -47,7 +47,8 @@ defmodule Vickrey.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:httpoison, "~> 1.8.0"}
+      {:httpoison, "~> 1.8.0"},
+      {:nimble_csv, "1.1.0"}
     ]
   end
 
