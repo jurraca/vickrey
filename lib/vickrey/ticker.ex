@@ -1,4 +1,4 @@
-defmodule Vickrey.Ticker do
+defmodule Vickrey.Fetcher do
   @moduledoc """
       Fetch the latest n blocks, return the actions and names involved.
   """

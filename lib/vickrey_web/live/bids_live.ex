@@ -2,7 +2,7 @@ defmodule VickreyWeb.BidsLive do
   use VickreyWeb, :live_view
 
     def mount(_params, _session, socket) do
-        {bids, opens} = Vickrey.Ticker.fetch_last_block() |> filter_by_action({[], []})
+        {bids, opens} = Vickrey.Fetcher.fetch_last_block() |> filter_by_action({[], []})
 
         {:ok, assign(socket, bids: bids, opens: opens)}
     end
