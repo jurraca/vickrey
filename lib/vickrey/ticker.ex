@@ -23,13 +23,11 @@ defmodule Vickrey.Ticker do
   end
 
   def fetch_last_block() do
-    RPC.get_best_blockhash()
-    |> fetch_block()
+    RPC.get_best_blockhash() |> fetch_block()
   end
 
   def fetch_last_n_blocks(n) do
-    height = RPC.get_block_count()
-    fetch_blocks_since(height, n)
+    RPC.get_block_count() |> fetch_blocks_since(n)
   end
 
   def fetch_blocks_since(height, n) do
@@ -46,32 +44,32 @@ defmodule Vickrey.Ticker do
   end
 
   def fetch_last_bids(n \\ 10) do
-    blocks = fetch_last_n_blocks(n)
-
-    Enum.map(blocks, fn block -> Enum.filter(
+    n
+    |> fetch_last_n_blocks()
+    |> Enum.map(fn block -> Enum.filter(
       block, fn row -> row.action in @bids end)
     end)
   end
 
   def fetch_last_sold(n \\ 10) do
-    blocks = fetch_last_n_blocks(n)
-
-    Enum.map(blocks, fn block -> Enum.filter(
+    n
+    |> fetch_last_n_blocks()
+    |> Enum.map(fn block -> Enum.filter(
       block, fn row -> row.action in @sold end)
     end)
   end
 
   def fetch_last_renewals(n \\ 10) do
-    blocks = fetch_last_n_blocks(n)
-    Enum.map(blocks, fn block -> Enum.filter(
+    n
+    |> fetch_last_n_blocks()
+    |> Enum.map(fn block -> Enum.filter(
       block, fn row -> row.action in @renew end)
     end)
   end
 
   def fetch_last_revoke(n \\ 10) do
-    blocks = fetch_last_n_blocks(n)
-
-    blocks
+    n
+    |> fetch_last_n_blocks()
     |> Enum.map(fn block -> Enum.filter(block, fn row -> row.action in @revoke end) end)
   end
 
