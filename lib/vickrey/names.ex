@@ -3,14 +3,13 @@ defmodule Vickrey.Names do
   Maps to the Names RPC commands.
   """
 
-  alias Vickrey.API
+  alias Vickrey.{API, RPC}
 
   def get_name_info(name) when is_binary(name) do
-    body = %{method: "getnameinfo", params: [name]} |> Jason.encode!()
-
-    body
+    %{method: "getnameinfo", params: [name]}
+    |> Jason.encode!()
     |> API.base_post_request()
-    |> Vickrey.RPC.handle_response()
+    |> RPC.handle_response()
     |> filter_name_resp()
   end
 
@@ -33,9 +32,8 @@ defmodule Vickrey.Names do
   defp filter_name_resp({:error, %{"message" => error}}), do: {:error, error}
 
   def get_name_by_hash(hash) when is_binary(hash) do
-    body = %{method: "getnamebyhash", params: [hash]} |> Jason.encode!()
-
-    body
+    %{method: "getnamebyhash", params: [hash]}
+    |> Jason.encode!()
     |> API.base_post_request()
   end
 end
