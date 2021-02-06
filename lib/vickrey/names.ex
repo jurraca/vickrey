@@ -8,7 +8,7 @@ defmodule Vickrey.Names do
   def get_name_info(name) when is_binary(name) do
     %{method: "getnameinfo", params: [name]}
     |> Jason.encode!()
-    |> API.base_post_request()
+    |> API.post()
     |> RPC.handle_response()
     |> filter_name_resp()
   end
@@ -38,7 +38,7 @@ defmodule Vickrey.Names do
   def get_name_by_hash(hash) when is_binary(hash) do
     %{method: "getnamebyhash", params: [hash]}
     |> Jason.encode!()
-    |> API.base_post_request()
+    |> API.post()
   end
 
   def get_name_by_hash(_), do: {:error, "Argument must be a binary -- a hash of a name."}

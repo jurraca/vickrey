@@ -1,37 +1,33 @@
 defmodule Vickrey.API do
   @moduledoc """
-  Main API utilities.
+  API Client.
   """
-  alias Vickrey.API.Utils
 
-  def base_request(addr) do
-    headers = Utils.headers()
+  @endpoint %URI{
+    host: Application.compile_env!(:vickrey, :ip),
+    port: String.to_integer(Application.compile_env!(:vickrey, :port)),
+    scheme: "http"
+  }
 
-    addr
-    |> HTTPoison.get(headers)
+  @api_key Application.compile_env!(:vickrey, :node_api_key)
+
+  def headers(headers \\ []) do
+    auth = Base.encode64(":" <> @api_key)
+    headers ++ [{"Content-Type", "application/json"}, {"Authorization", "Basic " <> auth}]
+  end
+
+  def get(path \\ "") do
+    @endpoint
+    |> Map.put(:path, path)
+    |> URI.to_string()
+    |> HTTPoison.get(headers())
     |> handle_response()
   end
 
-  def base_get_request() do
-    addr = Utils.get_node_address()
-
-    "http://#{addr}"
-    |> base_request()
-  end
-
-  def base_get_request(opts) do
-    addr = Utils.get_node_address()
-
-    "http://#{addr}/#{opts}"
-    |> base_request()
-  end
-
-  def base_post_request(body) do
-    addr = Utils.get_node_address()
-    headers = Utils.headers()
-
-    "http://#{addr}"
-    |> HTTPoison.post(body, headers)
+  def post(body) do
+    @endpoint
+    |> URI.to_string()
+    |> HTTPoison.post(body, headers())
     |> handle_response()
   end
 
@@ -40,7 +36,7 @@ defmodule Vickrey.API do
   end
 
   def handle_response({:ok, %HTTPoison.Response{body: body, status_code: status}}) do
-    %{status_code: status, body: Jason.decode(body)}
+    {:ok, %{status_code: status, body: Jason.decode!(body)} }
   end
 
   def handle_response({:ok, %HTTPoison.Error{reason: reason}}) do

@@ -9,7 +9,7 @@ defmodule Vickrey.RPC do
     body = Jason.encode!(%{method: "getblockchaininfo"})
 
     body
-    |> API.base_post_request()
+    |> API.post()
     |> handle_response()
   end
 
@@ -17,7 +17,7 @@ defmodule Vickrey.RPC do
     body = Jason.encode!(%{method: "getbestblockhash"})
 
     body
-    |> API.base_post_request()
+    |> API.post()
     |> handle_response()
   end
 
@@ -25,7 +25,7 @@ defmodule Vickrey.RPC do
     body = Jason.encode!(%{method: "getblockcount"})
 
     body
-    |> API.base_post_request()
+    |> API.post()
     |> handle_response()
   end
 
@@ -33,7 +33,7 @@ defmodule Vickrey.RPC do
     body = Jason.encode!(%{method: "getblock", params: [blockhash, verbose, details]})
 
     body
-    |> API.base_post_request()
+    |> API.post()
     |> handle_response()
   end
 
@@ -41,7 +41,7 @@ defmodule Vickrey.RPC do
     body = Jason.encode!(%{method: "getblockbyheight", params: [blockheight, verbose, details]})
 
     body
-    |> API.base_post_request()
+    |> API.post()
     |> handle_response()
   end
 
@@ -49,7 +49,7 @@ defmodule Vickrey.RPC do
     body = Jason.encode!(%{method: "getblockhash", params: [blockheight]})
 
     body
-    |> API.base_post_request()
+    |> API.post()
     |> handle_response()
   end
 
@@ -57,7 +57,7 @@ defmodule Vickrey.RPC do
     body = Jason.encode!(%{method: "getblockheader", params: [blockhash, verbose]})
 
     body
-    |> API.base_post_request()
+    |> API.post()
     |> handle_response()
   end
 
@@ -65,7 +65,7 @@ defmodule Vickrey.RPC do
     body = Jason.encode!(%{method: "getchaintips"})
 
     body
-    |> API.base_post_request()
+    |> API.post()
     |> handle_response()
   end
 
@@ -73,7 +73,7 @@ defmodule Vickrey.RPC do
     body = Jason.encode!(%{method: "getdifficulty"})
 
     body
-    |> API.base_post_request()
+    |> API.post()
     |> handle_response()
   end
 
@@ -81,7 +81,7 @@ defmodule Vickrey.RPC do
     body = Jason.encode!(%{method: "getnetworkhashps", params: [blocks, height]})
 
     body
-    |> API.base_post_request()
+    |> API.post()
     |> handle_response()
   end
 
@@ -89,7 +89,7 @@ defmodule Vickrey.RPC do
     body = Jason.encode!(%{method: "getmininginfo"})
 
     body
-    |> API.base_post_request()
+    |> API.post()
     |> handle_response()
   end
 
