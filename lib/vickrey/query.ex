@@ -16,7 +16,7 @@ defmodule Vickrey.Query do
 
     def get_by_action(action)do
       Transaction
-      |> where([t], t.action in ^action)
+      |> where([t], t.action == ^action)
       |> order_by([t], [asc: t.height])
     end
 
