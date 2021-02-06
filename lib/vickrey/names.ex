@@ -13,6 +13,10 @@ defmodule Vickrey.Names do
     |> filter_name_resp()
   end
 
+  def get_name_info(_), do: {:error, "Argument must be a binary -- a name."}
+
+  defp filter_name_resp(%{"info" => nil}), do: {:ok, "Not found."}
+
   defp filter_name_resp(%{"info" => info}) do
     {:ok,
      Map.take(info, [
@@ -36,4 +40,6 @@ defmodule Vickrey.Names do
     |> Jason.encode!()
     |> API.base_post_request()
   end
+
+  def get_name_by_hash(_), do: {:error, "Argument must be a binary -- a hash of a name."}
 end
