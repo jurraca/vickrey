@@ -1,23 +1,30 @@
 defmodule Vickrey.Query do
     import Ecto.Query
-    alias Vickrey.Transaction
+    alias Vickrey.{Transaction, Repo}
 
-    def get_name(name) when is_binary(name) do
+    def max_height(), do: Transaction |> select([t], max(t.height))
+
+    def get_name_txs(name) when is_binary(name) do
       Transaction
         |> where([t], t.name == ^name)
         |> order_by([t], [asc: t.height])
+        |> Repo.all()
     end
 
     def get_name_closed(name) do
       name
-      |> get_name()
+      |> get_name_txs()
       |> where([t], t.action in ["FINALIZE", "REGISTER"])
     end
 
     def get_by_action(action)do
       Transaction
       |> where([t], t.action == ^action)
-      |> order_by([t], [asc: t.height])
+    end
+
+    def get_by_action(action, exclude: true)do
+      Transaction
+      |> where([t], t.action != ^action)
     end
 
     def get_by_action_since(action, height) do
@@ -31,4 +38,27 @@ defmodule Vickrey.Query do
     def get_opens(), do: get_by_action("OPEN")
 
     def get_bids(), do: get_by_action("BID")
+
+    def get_latest_block_bids(height_lookback) do
+      "BID"
+      |> get_by_action_since(height_lookback)
+      |> order_by([t], [desc: t.height])
+      |> limit(100)
+    end
+
+    def get_auctions_by_name_and_type(action, name_length) do
+      Transaction
+      |> where([t], t.action == ^action)
+      |> where([t], fragment("char_length(?)", t.name) < ^name_length)
+      |> order_by([t], [desc: t.height])
+      |> limit(150)
+      |> Repo.all()
+    end
+
+    def get_all_names() do
+      Transaction
+      |> order_by([t], [asc: t.height])
+      |> distinct([t], t.name)
+      |> select([t], t.name)
+    end
 end
