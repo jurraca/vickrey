@@ -21,7 +21,7 @@ defmodule Vickrey.Namebase.Api do
   }
 
     def get_name_history(name) when is_binary(name) do
-        get(@marketplace_endpoint, "/#{name}/history")
+        get(@marketplace_endpoint, "/#{name}/history", "")
     end
 
     @doc """
