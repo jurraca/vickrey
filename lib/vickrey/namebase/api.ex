@@ -27,7 +27,7 @@ defmodule Vickrey.Namebase.Api do
     @doc """
     Returns the first 100 responses by offset. Use params to filter the response.
     """
-    def get_all_sold(offset \\ 1000, params \\ []) do
+    def get_all_sold(offset \\ 0, params \\ []) do
       params = URI.encode_query(params)
 
       get(@sold_endpoint, "/" <> Integer.to_string(offset), params)
@@ -36,7 +36,7 @@ defmodule Vickrey.Namebase.Api do
     @doc """
     Returns the first 100 responses by offset. Use params to filter the response.
     """
-    def get_all_listings(offset \\ 1000, params \\ []) do
+    def get_all_listings(offset \\ 0, params \\ []) do
       params = URI.encode_query(params)
 
       get(@listings_endpoint, "/" <> Integer.to_string(offset), params)
@@ -60,6 +60,10 @@ defmodule Vickrey.Namebase.Api do
     defp handle_response({:ok, %HTTPoison.Response{body: _, status_code: status}}) do
       {:error, status}
   end
+
+  defp handle_response({:error, %HTTPoison.Error{reason: reason}}) do
+    {:error, reason}
+end
 
   defp handle_body({:ok, %{"success" => true, "history" => history}} ), do: history
 

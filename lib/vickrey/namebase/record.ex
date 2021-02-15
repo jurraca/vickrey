@@ -7,6 +7,7 @@ defmodule Vickrey.Namebase.Record do
 
     use Ecto.Schema
     import Ecto.Changeset
+    alias Vickrey.Namebase.Api
 
     schema "namebase_records" do
       field :name, :string
@@ -25,5 +26,32 @@ defmodule Vickrey.Namebase.Record do
       %Vickrey.Namebase.Record{}
       |> changeset(record)
       |> Vickrey.Repo.insert()
+    end
+
+    def fetch_records(offset) do
+      offset
+      |> Api.get_all_sold(sortKey: "date", sortDirection: "asc")
+      |> Enum.map(fn rec -> format_record(rec) end)
+      |> Enum.map(fn rec -> insert(rec) end)
+    end
+
+    defp format_record(%{"amount" => amount, "created_at" => created_at} = rec) do
+      {:ok, date, 0} = DateTime.from_iso8601(created_at)
+
+      rec
+      |> Map.replace(:created_at, date)
+      |> Map.put("value", amount)
+      |> Map.put("action", "SOLD")
+    end
+
+    def crawl_records(start, acc \\ 0) do
+      count = start
+        |> fetch_records()
+        |> Enum.count()
+
+      new = acc + count
+      :timer.sleep(100)
+      IO.inspect(new, label: "count")
+      crawl_records(start + 100, new)
     end
 end
