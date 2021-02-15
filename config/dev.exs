@@ -2,10 +2,10 @@ use Mix.Config
 
 # Configure your database
 config :vickrey, Vickrey.Repo,
-  username: "postgres",
+  username: System.get_env("HANDSHAKE_DB_USER"),
   password: System.get_env("HANDSHAKE_DB_PW"),
-  database: "postgres",
-  hostname: System.get_env("HANDSHAKE_DB_HOST"),
+  database: "handshake",
+  hostname: System.get_env("HANDSHAKE_NODE"),
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 

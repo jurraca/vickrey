@@ -11,13 +11,13 @@ config :vickrey,
   ecto_repos: [Vickrey.Repo]
 
 # Configure your database
-config :vickrey, Vickrey.Repo,
-  username: "postgres",
-  password: System.get_env("HANDSHAKE_DB_PW"),
-  database: "postgres",
-  hostname: System.get_env("HANDSHAKE_DB_HOST"),
-  show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+#config :vickrey, Vickrey.Repo,
+#  username: "",
+#  password: System.get_env("HANDSHAKE_DB_PW"),
+#  database: "handshake",
+#  hostname: #System.get_env("HANDSHAKE_DB_HOST"),
+#  show_sensitive_data_on_connection_error: true,
+#  pool_size: 10
 
 # Configures the endpoint
 config :vickrey, VickreyWeb.Endpoint,
@@ -37,9 +37,9 @@ config :phoenix, :json_library, Jason
 
 # Handshake auth
 config :vickrey,
-  ip: "127.0.0.1",
+  ip: System.get_env("HANDSHAKE_NODE"),
   port: System.get_env("HANDSHAKE_NODE_PORT"),
-  node_api_key: System.get_env("HANDSHAKE_NODE_AUTH"),
+  node_api_key: System.get_env("HANDSHAKE_API_KEY"),
   wallet_api_key: ""
 
 # Import environment specific config. This must remain at the bottom
