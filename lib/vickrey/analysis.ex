@@ -45,6 +45,7 @@ defmodule Vickrey.Analysis do
 
     def zip_history(chain_hist, nb_hist) do
       chain_hist ++ nb_hist
+      |> Enum.reverse()
       # TODO map ts to height and sort
     end
 
@@ -78,9 +79,16 @@ defmodule Vickrey.Analysis do
         calc_profit(next, tail)
     end
 
-    def calc_profit(%{action: "SOLD", value: value, created_at: date}, [next | _tail]) do
+    def calc_profit(%{action: "SOLD", value: value, name: name, created_at: date}, [next | _tail]) do
       sold_value = value |> div(1_000_000)
       basis = trunc(next.value)
-      {:ok, %{basis: basis, sold: sold_value, sold_time: date, profit: sold_value - basis}}
+      {:ok, %{name: name, basis: basis, sold: sold_value, sold_time: date, profit: sold_value - basis}}
+    end
+
+    def sold_3_letter() do
+      Query.get_names_sold_distinct()
+      |> Query.filter_by_char_length(3)
+      |> Repo.all()
+      |> Enum.map(fn name -> build_history(name) end)
     end
 end

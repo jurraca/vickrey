@@ -35,7 +35,7 @@ defmodule Vickrey.Namebase.Record do
       |> Enum.map(fn rec -> insert(rec) end)
     end
 
-    defp format_record(%{"amount" => amount, "created_at" => created_at} = rec) do
+    def format_record(%{"amount" => amount, "created_at" => created_at} = rec) do
       {:ok, date, 0} = DateTime.from_iso8601(created_at)
 
       rec

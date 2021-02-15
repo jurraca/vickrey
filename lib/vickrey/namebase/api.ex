@@ -26,6 +26,7 @@ defmodule Vickrey.Namebase.Api do
 
     @doc """
     Returns the first 100 responses by offset. Use params to filter the response.
+    Allowed params: sortKey, sortDirection, firstCharacter, maxPrice, maxLength, onlyPuny.
     """
     def get_all_sold(offset \\ 0, params \\ []) do
       params = URI.encode_query(params)
@@ -63,7 +64,7 @@ defmodule Vickrey.Namebase.Api do
 
   defp handle_response({:error, %HTTPoison.Error{reason: reason}}) do
     {:error, reason}
-end
+  end
 
   defp handle_body({:ok, %{"success" => true, "history" => history}} ), do: history
 
