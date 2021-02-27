@@ -10,10 +10,16 @@ defmodule Vickrey.Query do
         |> order_by([t], [asc: t.height])
     end
 
+    def get_name_txs(names) when is_list(names) do
+      Transaction
+        |> where([t], t.name in ^names)
+        |> order_by([t], [asc: t.height])
+    end
+
     def get_name_closed(name) do
       name
       |> get_name_txs()
-      |> where([t], t.action == ["REGISTER", "FINALIZE", "TRANSFER"])
+      |> where([t], t.action in ["REGISTER", "FINALIZE", "TRANSFER"])
     end
 
     def get_name_transferred(name) do
@@ -45,6 +51,22 @@ defmodule Vickrey.Query do
     def get_sold(name) when is_binary(name) do
       Record
       |> where([r], r.name == ^name)
+    end
+
+    def get_sold(names) when is_list(names) do
+      Record
+      |> where([r], r.name in ^names)
+    end
+
+    def get_names_sold_distinct() do
+      Record
+      |> distinct([r], r.name)
+      |> select([r], r.name)
+    end
+
+    def filter_by_char_length(query, len) do
+      query
+      |> where([r], fragment("char_length(?)", r.name) <= ^len)
     end
 
     def get_auction_closes(), do: get_by_action("REGISTER")
