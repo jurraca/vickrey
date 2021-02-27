@@ -1,4 +1,4 @@
-defmodule Vickrey.Types.Block do
+defmodule Vickrey.Block do
   use Ecto.Schema
   import Ecto.Changeset
   alias Vickrey.Repo
@@ -33,9 +33,9 @@ defmodule Vickrey.Types.Block do
   end
 end
 
-defmodule Vickrey.Types.Block.Loader do
+defmodule Vickrey.Block.Loader do
   alias Vickrey.RPC
-  alias Vickrey.Types.Block
+  alias Vickrey.Block
 
   def load(start, finish) do
     start..finish

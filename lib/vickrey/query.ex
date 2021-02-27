@@ -1,8 +1,8 @@
 defmodule Vickrey.Query do
     import Ecto.Query
-    alias Vickrey.{Transaction, Namebase.Record, Repo}
+    alias Vickrey.{Block, Transaction, Namebase.Record, Repo}
 
-    def max_height(), do: Transaction |> select([t], max(t.height))
+    def max_height(), do: Block |> select([t], max(t.height))
 
     def get_name_txs(name) when is_binary(name) do
       Transaction
